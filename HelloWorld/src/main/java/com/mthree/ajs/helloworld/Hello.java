@@ -9,7 +9,8 @@ package com.mthree.ajs.helloworld;
 
 public class Hello {
     public static void main(String[] args) {
-        System.out.println("Hello, Augie!");
+        System.out.println("Hello, World!");
+        System.out.println("Good morning, Augie!");
     }
             
 }
