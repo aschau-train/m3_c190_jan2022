@@ -6,6 +6,11 @@
 package com.sg.classroster;
 
 import com.sg.classroster.controller.ClassRosterController;
+import com.sg.classroster.dao.ClassRosterDao;
+import com.sg.classroster.dao.ClassRosterDaoFileImpl;
+import com.sg.classroster.ui.ClassRosterView;
+import com.sg.classroster.ui.UserIO;
+import com.sg.classroster.ui.UserIOConsoleImpl;
 
 /**
  *
@@ -16,7 +21,19 @@ import com.sg.classroster.controller.ClassRosterController;
  */
 public class App {
     public static void main(String[] args) {
-        ClassRosterController controller = new ClassRosterController();
+        // Define dependency implementations
+        
+        // Based ENV variable, start args choose impl 
+        // UserIO io = new UserIOWebImpl();
+        UserIO io = new UserIOConsoleImpl();
+        ClassRosterDao dao = new ClassRosterDaoFileImpl();
+
+        // Inject UserIO dependency into ClassRosterView
+        ClassRosterView view = new ClassRosterView(io);
+        // Inject ClassRosterDao and ClassRosterView into ClassRosterController
+        ClassRosterController controller = new ClassRosterController(dao, view);
+        
+        // Run the application
         controller.run();
     }
 }
