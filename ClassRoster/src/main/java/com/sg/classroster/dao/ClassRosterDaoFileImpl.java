@@ -5,6 +5,7 @@
 
 package com.sg.classroster.dao;
 
+import com.sg.classroster.service.ClassRosterPersistenceException;
 import com.sg.classroster.dto.Student;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -35,7 +36,7 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
     
     @Override
     public Student addStudent(String studentId, Student student)
-        throws ClassRosterDaoException {
+        throws ClassRosterPersistenceException {
         loadRoster();
         Student newStudent = students.put(studentId, student);
         writeRoster();
@@ -43,19 +44,19 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
     }
 
     @Override
-    public List<Student> getAllStudents() throws ClassRosterDaoException {
+    public List<Student> getAllStudents() throws ClassRosterPersistenceException {
         loadRoster();
         return new ArrayList<>(students.values());
     }
 
     @Override
-    public Student getStudent(String studentId) throws ClassRosterDaoException {
+    public Student getStudent(String studentId) throws ClassRosterPersistenceException {
         loadRoster();
         return students.get(studentId);
     }
 
     @Override
-    public Student removeStudent(String studentId) throws ClassRosterDaoException{
+    public Student removeStudent(String studentId) throws ClassRosterPersistenceException{
         loadRoster();
         Student removedStudent = students.remove(studentId);
         writeRoster();
@@ -74,7 +75,7 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
         return studentAsText;
     }
     
-    private Student unmarshallStudent(String studentAsText) throws ClassRosterDaoException{
+    private Student unmarshallStudent(String studentAsText) throws ClassRosterPersistenceException{
         // studentAsText is expecting a line read in from our file.
         // For example, it might look like this:
         // 1234::Ada::Lovelace::Java-September1842
@@ -105,13 +106,13 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
             studentFromFile.setLastName(studentTokens[2]);
             studentFromFile.setCohort(studentTokens[3]);
         } catch (ArrayIndexOutOfBoundsException e){
-            throw new ClassRosterDaoException("Data file contains an empty line", e);
+            throw new ClassRosterPersistenceException("Data file contains an empty line", e);
         }
         
         return studentFromFile;
     }
     
-    private void loadRoster() throws ClassRosterDaoException {
+    private void loadRoster() throws ClassRosterPersistenceException {
         Scanner scanner;
         
         try {
@@ -121,7 +122,7 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
                         new FileReader(ROSTER_FILE))
             );
         } catch (FileNotFoundException e){
-            throw new ClassRosterDaoException(
+            throw new ClassRosterPersistenceException(
                     "-_- Could not load data into memory.", e);
         }
         
@@ -139,13 +140,13 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
         scanner.close();
     }
 
-    private void writeRoster() throws ClassRosterDaoException {
+    private void writeRoster() throws ClassRosterPersistenceException {
         PrintWriter out;
         
         try {
             out = new PrintWriter(new FileWriter(ROSTER_FILE));
         } catch (IOException e){
-            throw new ClassRosterDaoException("Could not save student data.", e);
+            throw new ClassRosterPersistenceException("Could not save student data.", e);
         }
         
         String studentAsText;
