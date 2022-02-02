@@ -29,10 +29,16 @@ import java.util.Scanner;
 public class ClassRosterDaoFileImpl implements ClassRosterDao {
     
     // TODO notes show these as pubic, lets see if this causes a problem
-    private static final String ROSTER_FILE = "roster.txt";
+    private static String ROSTER_FILE = "roster.txt";
     private static final String DELIMITER = "::";
 
     private Map<String, Student> students = new HashMap<>();
+    
+    public ClassRosterDaoFileImpl(String rosterTextFile){
+        ROSTER_FILE = rosterTextFile;
+    }
+    
+    public ClassRosterDaoFileImpl(){}
     
     @Override
     public Student addStudent(String studentId, Student student)
