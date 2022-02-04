@@ -18,9 +18,12 @@ public class App {
 
     public static void main(String[] args) {
        // Uncomment a line to run that particular demo
-        DemoArrays.demoArrays(args);
-        DemoObjects.demoObjects(args);
-        DemoInheritance.demoInheritance(args);
-       DemoContainers.demoContainers(args);
+//        DemoArrays.demoArrays(args);
+//        DemoObjects.demoObjects(args);
+//        DemoInheritance.demoInheritance(args);
+//       DemoContainers.demoContainers(args);
+//        SimpleFileIO.demoFileIO(args);
+//        EnumsAndDates.demo(args);
+        BigDecimalDemo.demo(args);
     }
 }
