@@ -41,5 +41,5 @@ or
 > git pull
 * Switch the the working branch
 > git checkout featurebranch
-* And merge the latest changes into your branch
-> git merge main
+* And merge the latest changes into your branch and include a commit comment -m
+> git merge main -m "Merge main into featurebranch"
