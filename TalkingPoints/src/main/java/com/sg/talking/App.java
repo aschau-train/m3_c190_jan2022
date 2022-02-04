@@ -24,6 +24,7 @@ public class App {
 //       DemoContainers.demoContainers(args);
 //        SimpleFileIO.demoFileIO(args);
 //        EnumsAndDates.demo(args);
-        BigDecimalDemo.demo(args);
+//        BigDecimalDemo.demo(args);
+        new LambdaStreamDemo().demo(args);
     }
 }
