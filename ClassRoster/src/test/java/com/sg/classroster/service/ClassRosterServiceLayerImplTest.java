@@ -13,6 +13,9 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -20,15 +23,23 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class ClassRosterServiceLayerImplTest {
 
-    private ClassRosterAuditDao auditDao;
-    private ClassRosterDao dao;
+//    private ClassRosterAuditDao auditDao;
+//    private ClassRosterDao dao;
     private ClassRosterServiceLayer service;
 
+    public ClassRosterServiceLayerImplTest(){
+        // Use Spring DI to  inject dependencies into ServiceLayer
+        ApplicationContext ctx = 
+                new ClassPathXmlApplicationContext("applicationContext.xml");
+        service = 
+                ctx.getBean("serviceLayer", ClassRosterServiceLayer.class);
+    }
+    
     @BeforeEach
     public void setUp() {
-        auditDao = new ClassRosterAuditDaoStubImpl();
-        dao = new ClassRosterDaoStubImpl();
-        service = new ClassRosterServiceLayerImpl(dao, auditDao);
+//        auditDao = new ClassRosterAuditDaoStubImpl();
+//        dao = new ClassRosterDaoStubImpl();
+//        service = new ClassRosterServiceLayerImpl(dao, auditDao);
     }
 
     /**
