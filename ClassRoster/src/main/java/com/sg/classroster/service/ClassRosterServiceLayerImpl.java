@@ -30,8 +30,10 @@ public class ClassRosterServiceLayerImpl implements ClassRosterServiceLayer {
 
     @Override
     public void createStudent(Student student) throws ClassRosterDuplicateIdException, ClassRosterDataValidationException, ClassRosterPersistenceException {
+        // Check that student is not null
+        if (student == null) return;
         // Check the id
-
+         
         // Reduce calls to getStudentId by caching it
         // String studentId = student.getStudentId();
 
