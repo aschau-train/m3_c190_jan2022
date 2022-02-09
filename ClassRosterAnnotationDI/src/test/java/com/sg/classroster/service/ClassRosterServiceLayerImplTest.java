@@ -30,13 +30,15 @@ public class ClassRosterServiceLayerImplTest {
 
     public ClassRosterServiceLayerImplTest(){
         // Use Spring DI to  inject dependencies into ServiceLayer
+        
+        // Use try with resources to make sure that ctx is release when done
         try(AnnotationConfigApplicationContext ctx = 
                 new AnnotationConfigApplicationContext()){
                     ctx.scan("com.sg.classroster.service");
                     ctx.refresh();
                 service = 
                     ctx.getBean("classRosterServiceLayerImpl", ClassRosterServiceLayer.class);
-                }
+                } // an implied finally{  ctx.close();}
     }
     
     @BeforeEach
