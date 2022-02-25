@@ -9,6 +9,7 @@ package com.sg.todo.data;
 import com.sg.todo.models.ToDo;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Repository;
  *purpose:
  */
 @Repository
+@Profile("memory")
 public class ToDoInMemoryDao implements ToDoDao {
 
     private static final List<ToDo> todos = new ArrayList();
