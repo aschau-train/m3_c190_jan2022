@@ -43,9 +43,10 @@
 			<scope>test</scope>
 		</dependency>
 	 <dependency>
-	  <groupId>com.google.protobuf</groupId>
-	  <artifactId>protobuf-java</artifactId>
-	  <version>3.11.4</version>
+	  <groupId>junit</groupId>
+	  <artifactId>junit</artifactId>
+	  <version>4.13</version>
+	  <scope>test</scope>
 	  <type>jar</type>
 	 </dependency>
 	</dependencies>

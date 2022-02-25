@@ -13,12 +13,14 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author augie email: aschau@wiley.com date: 2022.02.23 purpose:
  */
+@Repository
 public class EmployeeDaoDB implements EmployeeDao {
 
     @Autowired
@@ -33,11 +35,13 @@ public class EmployeeDaoDB implements EmployeeDao {
     }
 
     @Override
-    public Employee getEmployeeById() {
+    public Employee getEmployeeById(int id) {
         Employee emp = null;
         try {
-            final String SELECT_EMPLOYEE_BY_ID = "SELECT * FROM employee WHERE id = ?";
-            emp = jdbc.queryForObject(SELECT_EMPLOYEE_BY_ID, employeeMapper);
+            final String SELECT_ALL_EMPLOYEES = "SELECT * FROM employee";
+            return jdbc.query(SELECT_ALL_EMPLOYEES, employeeMapper).stream().filter(e -> e.getId() == id).findFirst().orElse(null);
+//            final String SELECT_EMPLOYEE_BY_ID = "SELECT * FROM employee WHERE id = ?";
+//            emp = jdbc.queryForObject(SELECT_EMPLOYEE_BY_ID, employeeMapper);
         } catch (DataAccessException ex) {
             emp = null;
         }

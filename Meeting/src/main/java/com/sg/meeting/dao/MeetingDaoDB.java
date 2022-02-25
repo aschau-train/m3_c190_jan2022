@@ -17,13 +17,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author augie email: aschau@wiley.com date: 2022.02.23 purpose:
  */
-public class MeetingDaoDB implements MeetDao {
+@Repository
+public class MeetingDaoDB implements MeetingDao {
 
     @Autowired
     JdbcTemplate jdbc;
@@ -55,7 +57,7 @@ public class MeetingDaoDB implements MeetDao {
     }
 
     @Override
-    public List<Meeting> getMeetingsByRoom(Room room) {
+    public List<Meeting> getMeetingsForRoom(Room room) {
         final String SELECT_MEETINGS_FOR_ROOM
                 = "SELECT * FROM meeting WHERE roomid = ?";
         List<Meeting> meetings
@@ -67,8 +69,8 @@ public class MeetingDaoDB implements MeetDao {
     @Override
     public List<Meeting> getMeetingsForEmployee(Employee employee) {
         final String SELECT_MEETINGS_FOR_EMPLOYEE
-                = "SELECT * FROM meeting m JOIN meeeting_employee me "
-                + "ON m.id = me.meetingid WHERE me.employeeId = ?";
+                = "SELECT * FROM meeting AS m JOIN meeting_employee AS me "
+                + "ON m.id = me.meetingId WHERE me.employeeId = ?";
         List<Meeting> meetings
                 = jdbc.query(SELECT_MEETINGS_FOR_EMPLOYEE, meetingMapper, employee.getId());
         addRoomAndEmployeesToMeetings(meetings);
@@ -83,6 +85,7 @@ public class MeetingDaoDB implements MeetDao {
         jdbc.update(INSERT_MEETING, meeting.getName(), Timestamp.valueOf(meeting.getTime()), meeting.getRoom().getId());
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         meeting.setId(newId);
+        insertMeetingEmployee(meeting);
         return meeting;
     }
 

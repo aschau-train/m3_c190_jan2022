@@ -12,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author augie email: aschau@wiley.com date: 2022.02.23 purpose:
  */
+@Repository
 public class RoomDaoDB implements RoomDao {
 
     @Autowired
@@ -34,8 +36,14 @@ public class RoomDaoDB implements RoomDao {
     @Override
     public Room getRoomById(int id) {
         try {
-            final String SELECT_ROOM_BY_ID = "SELECT * FROM room WHERE id = ?";
-            return jdbc.queryForObject(SELECT_ROOM_BY_ID, roomMapper);
+            final String SELECT_ALL_ROOMS = "SELECT * FROM room";
+            List<Room> rooms = jdbc.query(SELECT_ALL_ROOMS, roomMapper);
+            if (rooms.size() == 0)
+                return null;
+            Room room = rooms.stream().filter(r -> r.getId() == id).findFirst().get();
+            return room;
+//            final String SELECT_ROOM_BY_ID = "SELECT * FROM room WHERE id = ?";
+//            return jdbc.queryForObject(SELECT_ROOM_BY_ID, roomMapper);
         } catch (DataAccessException e) {
             return null;
         }

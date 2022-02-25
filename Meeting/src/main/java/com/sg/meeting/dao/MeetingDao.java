@@ -13,10 +13,10 @@ import java.util.List;
  *
  * @author augie
  */
-public interface MeetDao {
+public interface MeetingDao {
     Meeting getMeetingById(int id);
     List<Meeting> getAllMeetings();
-    List<Meeting> getMeetingsByRoom(Room room);
+    List<Meeting> getMeetingsForRoom(Room room);
     List<Meeting> getMeetingsForEmployee(Employee employee);
     Meeting addMeeting(Meeting meeting);
     void updateMeeting(Meeting meeting);
