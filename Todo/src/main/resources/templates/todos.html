@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Course Manager</title>
+  </head>
+    <body>
+    <!-- Begin main body -->
+        <div class="container">
+            <div class="row m-4">
+                <div class="col text-center border border-dark">
+                    <h1><a href="/" class="text-dark">Task Manager</a></h1>
+                </div>
+            </div>
+            <div class="row m-4 border border-dark">
+                <div class="col text-center m-3">
+                    <a href="todos" class="btn btn-outline-primary btn-lg">Todos</a>
+                </div>
+            </div>
+            <div class="row m-4 border border-dark">
+                <div class="col-3 text-center m-3">
+                    <span class="h3">Add ToDo</span>
+                </div>
+                <div class="col-7 text-center m-3">
+                    <form action="addTodo" method="POST">
+                        <div class="form-group row">
+                            <label for="todo" class="col-3 col-form-label">
+                                ToDo</label>
+                            <div class="col-9">
+                                <input type="text" name="todo" 
+                                       id="todo" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="note" class="col-3 col-form-label">
+                                Note</label>
+                            <div class="col-9">
+                                <input type="text" name="note" 
+                                       id="note" class="form-control"/>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add ToDo</button>
+                    </form>
+                </div>
+            </div>
+            <div class="row m-4 border border-dark">
+                <div class="col text-center m-3">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>ToDo</th>
+                                <th>Note</th>
+                                <th>Finished</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="todo : ${todos}">
+                                <td th:text="${todo.id}">ID</td>
+                                <td th:text="${todo.todo}">ToDo</td>
+                                <td th:text="${todo.note}">Note</td>
+                                <td th:text="${todo.finished}">Finished</td>
+                                <td><a href="#" th:href="@{/editTodo(id=${todo.id})}">Edit</a></td>   
+                                <td><a href="#" th:href="@{/deleteTodo(id=${todo.id})}">Delete</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> 
+    <!-- End main body -->
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+</html>

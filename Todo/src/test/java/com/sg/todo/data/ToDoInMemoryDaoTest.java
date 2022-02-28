@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 
 import com.sg.todo.models.ToDo;
+import org.junit.jupiter.api.Assertions;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,10 +42,12 @@ public class ToDoInMemoryDaoTest {
 
     @Test
     void testDeleteById() {
+        List<ToDo> todos = dao.getAll();
+        int startingSize = todos.size();
         int goodId = firstToDo.getId();
         dao.deleteById(goodId);
-        List<ToDo> todos = dao.getAll();
-        assertEquals(todos.size(),0);
+        todos = dao.getAll();
+        assertEquals(todos.size(),startingSize - 1);
     }
 
     @Test
@@ -57,7 +60,7 @@ public class ToDoInMemoryDaoTest {
     @Test
     void testGetAll() {
         List<ToDo> todos = dao.getAll();
-        assertEquals(todos.size(),1);
+        assertTrue(todos.size() > 0);
     }
 
     @Test
